@@ -3,7 +3,7 @@
 <%= form_with model: @discount, url: '/merchant/discounts/', local: :true do |f| %>
   <%= f.label :title, 'Title: ' %>
   <%= f.text_field :title %> <br>
-  <%= f.label :percentage, 'Discount Amount: ' %>
+  <%= f.label :percentage, 'Discount Percentage: ' %>
   <%= f.number_field :percentage %> <br>
   <%= f.label :items, 'Item Threshold: ' %>
   <%= f.number_field :items %> <br>
