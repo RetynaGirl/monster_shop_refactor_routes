@@ -14,12 +14,12 @@ class Item < ApplicationRecord
     where(active: true)
   end
 
-  def self.by_popularity(limit = nil, order = "DESC")
+  def self.by_popularity(limit = nil, order = 'DESC')
     left_joins(:order_items)
-    .select('items.id, items.name, COALESCE(sum(order_items.quantity), 0) AS total_sold')
-    .group(:id)
-    .order("total_sold #{order}")
-    .limit(limit)
+      .select('items.id, items.name, COALESCE(sum(order_items.quantity), 0) AS total_sold')
+      .group(:id)
+      .order("total_sold #{order}")
+      .limit(limit)
   end
 
   def sorted_reviews(limit = nil, order = :asc)
@@ -28,5 +28,18 @@ class Item < ApplicationRecord
 
   def average_rating
     reviews.average(:rating)
+  end
+
+  def has_discount?(item_count)
+    !merchant.discounts.where(items: 0..item_count).empty?
+  end
+
+  def discount_multiplier(item_count)
+    applical_discounts = merchant.discounts.where(items: 0..item_count).order(percentage: :desc)
+    if applical_discounts.empty?
+      1.0
+    else
+      1 - (applical_discounts[0].percentage / 100)
+    end
   end
 end
