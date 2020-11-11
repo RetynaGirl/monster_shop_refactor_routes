@@ -1,0 +1,13 @@
+<h2>New Discount</h2>
+
+<%= form_with model: @discount, url: '/merchant/discounts/', local: :true do |f| %>
+  <%= f.label :title, 'Title: ' %>
+  <%= f.text_field :title %> <br>
+  <%= f.label :percentage, 'Discount Amount: ' %>
+  <%= f.number_field :percentage %> <br>
+  <%= f.label :items, 'Item Threshold: ' %>
+  <%= f.number_field :items %> <br>
+  <%= f.label :description %>
+  <%= f.text_area :description %> <br>
+  <%= f.submit value: 'Create Discount' %>
+<% end %>
