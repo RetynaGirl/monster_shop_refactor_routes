@@ -20,6 +20,38 @@ class Merchant::DiscountsController < Merchant::BaseController
     end
   end
 
+  def edit
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    @discount = Discount.find(params[:id])
+
+    begin
+      @discount.update!(discount_params)
+      # require 'pry'; binding.pry
+      flash[:success] = 'Discount updated successfully!'
+      redirect_to '/merchant/discounts'
+    rescue ActiveRecord::RecordInvalid => e
+      create_error_response(e)
+      render :new
+    end
+  end
+
+  def destroy
+    @discount = Discount.find(params[:id])
+
+     begin
+      @discount.delete
+      # require 'pry'; binding.pry
+      flash[:success] = 'Discount deleted successfully!'
+      redirect_to '/merchant/discounts'
+    rescue ActiveRecord::RecordInvalid => e
+      create_error_response(e)
+      render :new
+    end
+  end
+
   private
 
   def discount_params

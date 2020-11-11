@@ -36,10 +36,10 @@ describe 'Discount Create' do
       fill_in('discount[description]', with: 'This is a test discount')
 
       click_button('Create Discount')
-      save_and_open_page
+      # save_and_open_page
       @discount_2 = Discount.last
 
-      expect(page).to have_current_path('/merchant/discounts/')
+      expect(page).to have_current_path('/merchant/discounts')
       expect(page).to have_content("Bulk Discounts for #{@merchant_1.name}")
       expect(page).to have_link('Create Discount')
 
