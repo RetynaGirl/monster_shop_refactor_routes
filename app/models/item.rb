@@ -36,6 +36,7 @@ class Item < ApplicationRecord
 
   def discount_multiplier(item_count)
     applical_discounts = merchant.discounts.where(items: 0..item_count).order(percentage: :desc)
+
     if applical_discounts.empty?
       1.0
     else
